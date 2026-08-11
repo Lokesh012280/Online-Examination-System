@@ -1,3 +1,4 @@
+import re
 class Student:
     def __init__(self, student_id, name, course, email, phone):
         self.student_id = student_id
@@ -67,6 +68,12 @@ class Student:
 
 
 students = []
+def validate_email(email):
+    pattern = r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-za-z]{2,}$"
+    if re.match(pattern, email):
+        return True
+    else:
+        return False
 
 
 def add_student():
@@ -74,8 +81,22 @@ def add_student():
     student_id = int(input("Enter Student ID: "))
     name = input("Enter Name: ")
     course = input("Enter Course: ")
-    email = input("Enter Email: ")
+    #email validation
+    while True:
+        email = input("Enter Email: ")
+        if validate_email(email):
+            break
+        else:
+            print("Please enter a valid email address")
+            print("Example: student@gmail.com")
     phone = input("Enter Phone: ")
+    while True:
+        phone = input("Enter Phone: ")
+
+        if phone.isdigit() and len(phone) == 10:
+            break
+        else:
+            print("Invalid Phone Number! Please enter exactly 10 digits.")
 
     stu = Student(student_id, name, course, email, phone)
     students.append(stu)
